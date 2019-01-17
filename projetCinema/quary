@@ -1,0 +1,274 @@
+CREATE TABLE cinema (
+name_cinema TEXT PRIMARY KEY,
+address TEXT,
+city TEXT,
+number_movie_theater INTEGER
+);
+
+CREATE TABLE genre(
+id_genre INTEGER PRIMARY KEY,
+name_genre TEXT,
+age_allowed INTEGER
+);
+
+CREATE TABLE film(
+film_title TEXT PRIMARY KEY,
+publish_years INTEGER,
+director TEXT,
+id_genre INTEGER,
+FOREIGN KEY(id_genre) REFERENCES genre(id_genre)
+);
+
+CREATE TABLE programming(
+ pro_id INTEGER PRIMARY KEY,
+ state TEXT,
+ date_start DATE,
+ date_end DATE,
+ name_cinema TEXT,
+ film_title TEXT, 
+ FOREIGN KEY(name_cinema) REFERENCES cinema(name_cinema),
+ FOREIGN KEY(film_title) REFERENCES film(film_title)
+);
+
+CREATE TABLE review (
+name_newspaper TEXT PRIMARY KEY,
+date_publication DATE,
+rate INTEGER,
+film_title TEXT, 
+FOREIGN KEY(film_title) REFERENCES film(film_title)
+);
+
+CREATE TABLE actor (
+name_actor TEXT PRIMARY KEY,
+forename_actor TEXT,
+sex TEXT
+);
+
+CREATE TABLE role(
+id_role INTEGER PRIMARY KEY,
+type_role TEXT,
+occupation TEXT
+);
+
+CREATE TABLE character(
+name_char TEXT PRIMARY KEY,
+forename_char TEXT,
+film_title TEXT,
+name_actor TEXT, 
+id_role INTEGER,
+FOREIGN KEY(film_title) REFERENCES film(film_title),
+FOREIGN KEY(name_actor) REFERENCES actor(name_actor),
+FOREIGN KEY(id_role) REFERENCES role(id_role)
+);
+
+CREATE TABLE couples(
+name_female TEXT,
+name_male TEXT,
+id_couple INTEGER PRIMARY KEY,
+FOREIGN KEY(name_male) REFERENCES actor(name_actor),
+FOREIGN KEY(name_female) REFERENCES actor(name_actor)
+);
+
+insert into cinema values('Gaumont', 'RUE GASTON','NANTES', 10); 
+insert into cinema values('Pathe', 'RUE PIERRE','NANTES', 8); 
+insert into cinema values('BigCinema', 'RUE JEAN','NANTES', 15); 
+insert into cinema values('Cinemetropole', 'RUE PAUL','NANTES', 5); 
+insert into cinema values('Cinecommune', 'RUE PATRICK','NANTES', 7); 
+insert into cinema values('Cineville', 'RUE BOB','NANTES', 6);
+
+insert into genre values(0, 'comedy' , 0);
+insert into genre values(1, 'tragedy' , 0);
+insert into genre values(2, 'action' , 10);
+insert into genre values(3, 'crime' , 12);
+insert into genre values(4, 'romantic' , 0);
+insert into genre values(5, 'horror' , 16);
+
+insert into film values('Startfighter', 1999 , 'Jean Guy LEROI', 2);
+insert into film values('The Crime', 2018 , 'Jean Pierre CAMERAMAN',3);
+insert into film values('Si seulement', 2019 , 'Jean DRAME',1);
+insert into film values('The Voices', 2015 , 'Jean Philippe PRISEDESON',0);
+insert into film values('Deads are alive', 1950 , 'Jean Charles HORREUR',5);
+insert into film values('Karl', 1999 , 'Jean Michel REVOLUTION',4);
+insert into film values('Dark nignts', 2015 , 'Hector MacQueen',3);
+insert into film values('Big Bang', 2015 , 'Chuck Lorre',0);
+
+insert into programming values(1000, 'has been shown' , '2015-01-01','2015-02-16','Cinemetropole','The Voices');
+insert into programming values(1001, 'will be shown' , '2019-01-01','2019-03-16','Cinemetropole','Si seulement');
+insert into programming values(1002, 'has been shown' , '2015-01-23','2015-04-07','Cinemetropole','Big Bang');
+
+insert into programming values(2000, 'has been shown' , '1999-02-05','1999-04-24','Cinecommune','Startfighter');
+insert into programming values(2001, 'has been shown' , '2015-01-08','2015-02-17','Cinecommune','The Voices');
+
+insert into programming values(3000, 'is being shown' , '2018-01-01','2018-04-24','Cineville','The Crime');
+insert into programming values(3001, 'has been shown' , '1999-10-22','1999-12-04','Cineville','Karl');
+insert into programming values(3002, 'has been shown' , '2015-01-30','2015-03-27','Cineville','Big Bang');
+
+insert into programming values(4000, 'has been shown' , '1950-05-21','1950-08-01','BigCinema','Deads are alive');
+insert into programming values(4001, 'has been shown' , '2015-01-17','2015-04-03','BigCinema','Dark nignts'); 
+insert into programming values(4002, 'is being shown' , '2018-02-01','2018-03-11','BigCinema','The Crime');
+
+insert into programming values(5000, 'has been shown' , '1950-04-04','1950-06-21','Pathe','Deads are alive');
+insert into programming values(5001, 'will be shown' , '2019-01-07','2019-03-02','Pathe','Si seulement');
+
+insert into programming values(6000, 'has been shown' , '2015-01-15','2015-03-20','Gaumont','The Voices'); 
+insert into programming values(6001, 'has been shown' , '1999-01-01','1999-02-11','Gaumont','Startfighter');
+insert into programming values(6002, 'has been shown' , '1950-05-04','1950-08-11','Gaumont','Deads are alive');
+insert into programming values(6003, 'has been shown' , '1999-10-04','1999-12-02','Gaumont','Karl');
+insert into programming values(6004, 'is being shown' , '2018-01-04','2018-03-29','Gaumont','The Crime');
+insert into programming values(6005, 'will be shown' , '2019-01-23','2019-04-02','Gaumont','Si seulement');
+insert into programming values(6006, 'has been shown' , '2015-01-15','2015-04-08','Gaumont','Dark nignts'); 
+
+insert into actor values('Chen', 'Jack', 'M');
+insert into actor values('Bond', 'Helene', 'F');
+insert into actor values('Christie', 'Agatha', 'F');
+insert into actor values('Sherlock', 'Jackson', 'M');
+insert into actor values('Doll', 'Daisy', 'M');
+insert into actor values('Smith', 'Sophie', 'F');
+insert into actor values('Dragomiroff', 'Natalia', 'F');
+insert into actor values('Parsons', 'Jim', 'M');
+
+insert into role values(0, 'good', 'farmer');
+insert into role values(1, 'bad', 'spy');
+insert into role values(2, 'good', 'policeman');
+insert into role values(3, 'bad', 'devil churchman');
+insert into role values(4, 'neutral', 'scientist');
+insert into role values(5, 'neutral', 'baker');
+insert into role values(6, 'good', 'teacher');
+insert into role values(7, 'neutral', 'programmer');
+insert into role values(8, 'bad', 'killer');
+insert into role values(9, 'good', 'scientist');
+
+insert into character values('Rose', 'Lily','The Crime', 'Smith',1);
+insert into character values('Pool','Ameli','The Crime','Chen',3);
+
+insert into character values('Hawking', 'Stephan','The Voices', 'Doll',4);
+insert into character values('Palm','Molly','The Voices','Smith',5);
+
+insert into character values('Ann', 'Chloe','Deads are alive', 'Bond',5);
+insert into character values('Paul', 'Victor','Si seulement', 'Chen',2);
+insert into character values('Pitt', 'Louis','Startfighter', 'Sherlock',0);
+insert into character values('Kol', 'Max','Karl', 'Christie',3);
+
+insert into character values('Hubbard','Caroline','Dark nignts','Smith',7);
+insert into character values('Schmidt', 'Ruldoph','Dark nignts', 'Sherlock',6);
+insert into character values('Ohlsson', 'Greta','Dark nignts', 'Dragomiroff',8);
+
+insert into review values('Daily Planet', '2015-01-20', 2, 'The Voices');
+insert into review values('AlloJournal', '2015-01-22', 3, 'The Voices');
+insert into review values('Health', '2015-04-22', 3, 'The Voices');
+
+insert into review values('Weekly Planet', '1999-01-10', 1, 'Startfighter');
+insert into review values('Cambridge', '1999-03-12', 2, 'Startfighter');
+
+insert into review values('Fun Magazine', '1999-10-25', 3, 'Karl');
+insert into review values('Mode', '1999-12-25', 4, 'Karl');
+
+insert into review values('The Guardian', '1950-04-06', 4, 'Deads are alive');
+
+insert into review values('University', '2015-02-05', 4, 'Dark nignts');
+insert into review values('Universe Cinema', '2015-02-09', 5, 'Dark nignts');
+insert into review values('Histoire', '2015-03-28', 5, 'Dark nignts');
+
+insert into couples values('Smith','Chen',1);
+insert into couples values('Christie','Sherlock',2);
+insert into couples values('Dragomiroff','Doll',3);
+
+--1. List of cinemas in Nantes (name and localization),
+SELECT name_cinema,address
+FROM cinema
+WHERE city='NANTES';
+
+--2. List of newspapers having given a number of stars greater than or equal to 2,
+SELECT name_newspaper
+FROM review
+WHERE rate >=2;
+
+--3. List of newspapers having given a number of stars greater than the overall mean,
+SELECT name_newspaper
+FROM review
+WHERE rate>=(SELECT AVG(rate) FROM review);
+
+--4. List of the names of crime film directors,
+SELECT director
+FROM film
+WHERE id_genre = (SELECT id_genre FROM genre
+WHERE name_genre ='crime');
+
+--5. List of films (titles) on release at a given date in a given cinema,
+SELECT film_title
+FROM programming
+WHERE (date_start = '2015-01-15') AND (name_cinema='Gaumont');
+
+--6. List of films (titles) with the corresponding mean number of stars,
+SELECT film_title, AVG(rate)
+FROM review
+GROUP BY film_title;
+
+--7. List of actresses and actors with the number of associated films
+SELECT name_actor, COUNT(film_title)
+FROM character
+GROUP BY name_actor;
+
+--8. List of the most prolific actress(es) since a given year,
+SELECT name_actor,COUNT(character.film_title) as num_of_films 
+FROM character
+JOIN
+film
+ON character.film_title=film.film_title
+WHERE publish_years>=2015
+GROUP BY character.name_actor
+HAVING COUNT(character.film_title)=(SELECT MAX(cou)
+FROM(SELECT name_actor,COUNT(character.film_title) as cou
+FROM character
+GROUP BY character.name_actor));
+
+--9. List of films (titles) showing in Nantes in at least two cinemas at a given date
+SELECT film_title
+FROM programming 
+JOIN 
+cinema
+ON programming.name_cinema=cinema.name_cinema
+WHERE '2015-01-22'>date_start AND '2015-01-22' < date_end AND  cinema.city='NANTES'
+GROUP BY film_title
+HAVING COUNT(programming.name_cinema)>=2;
+
+--10. List of couples of actors or actresses having never played. Indicate the forename and name of the actresses and actors
+
+
+SELECT a1.name_actor,a1.forename_actor,a2.name_actor,a2.forename_actor
+FROM actor as a1, actor as a2, couples as c
+WHERE a1.name_actor=c.name_female and a2.name_actor=c.name_male
+AND c.name_female IN (
+SELECT cp.name_female
+FROM couples as cp
+EXCEPT
+SELECT cp1.name_female
+FROM couples as cp1
+JOIN character as ca1
+ON cp1.name_female=ca1.name_actor
+WHERE EXISTS 
+(SELECT ca2.film_title
+FROM character as ca2 
+WHERE cp1.name_male=ca2.name_actor AND ca2.film_title=ca1.film_title)
+);
+
+
+
+
+--The user specifies a date and a type of film (such as comedy or crime),the program provides a numbered list of film titles
+SELECT DISTINCT film.film_title 
+FROM film
+JOIN 
+genre
+ON film.id_genre = genre.id_genre
+JOIN programming
+ON film.film_title = programming.film_title 
+WHERE genre.name_genre = "comedy" AND '2015-02-03'>date_start AND '2015-02-03' < date_end;
+
+--The user selects a number,the program provides the list of corresponding cinemas (name, city)
+SELECT cinema.name_cinema,city
+FROM cinema
+JOIN
+programming
+ON programming.name_cinema = cinema.name_cinema
+WHERE '2015-02-03'>date_start AND '2015-02-03' < date_end AND film_title = 'The Voices';
